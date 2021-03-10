@@ -84,3 +84,90 @@ conda install pytorch torchvision torchaudio -c pytorch
 ```
 
 My plan now is to follow PennyLane Tutorials for QML. The first in my list is a simple variational circuit that implements an X gate from two rotations. [Here]() are the tutorials I will follow.
+
+## Basic Tutorial: Qubit rotations
+
+Well, now that everything is installed, I set out to building my first variational circuit with PennyLane. This consists on a single wire, with two rotations around axes x and y, with angles $\phi_1$ and $\phi_2$
+
+<p align="center">
+  <img src="diegoherrera262_files/HelloWorldXandau/HelloWorldXandau.svg">
+</p>
+
+The tutorial may be accessed [here](https://pennylane.readthedocs.io/en/user-docs-refactor/tutorials/pennylane_run_qubit_rotation.html#qubit-rotation). They discuss a bunch of mathematics that is left for the unexperienced reader. However, I will not reproduce it because the important part is the essence
+
+> The goal is to determine values for $\phi_1$ and $\phi_2$ such that the circuit emulates the action of a Pauli $Z$.
+
+The solution they propose is quite interesting to me. At first, they point out that the expected value of Pauli $Z$ can be used as a **cost function**, which assess if our parameter selection is good or bad. The nearer $\langle\psi_f|Z|\psi_f\rangle$ to $-1$, the better the parameters chosen.
+
+> Basically, what they suggest doing is executing the circuit, and evaluating $\langle\psi_f|Z|\psi_f\rangle$ using statistics. A classical control uses this value as a cost function. An optimization method is used then to tune the parameters until expected value converges to a minimum, which implies that the lowest eigenvalue state has been prepared ($|1\rangle$).
+
+**IMPORTANT:** This session can be recreated from ```Notebooks/QubitRotation.py```
+
+### Implementation with PennyLane
+
+So, I started by importing PennyLane and NumPy using the wrapper as suggested
+
+```python
+import pennylane as qml
+from pennylane import numpy as np
+```
+
+No error was produced by these 2 commands. I point out that Xanadu suggests that user always import NumPy from the wrapper. After that, a **quantum device** must be installed. This is sort of like the infrastructure that runs the algorithm. It can be a simulator or a real device. However, to use real devices, the appropriate plug-ins must be installed. They use the default digital simulator for this example. A quantum device is called by a command of the form
+
+```python
+device = qml.device('backend_name', wires=NUM_QUBITS)
+```
+
+I expect that the notation is sufficiently clear. Tested the function with ```default.qubit```, and ran without error. I expect to test it with StrawberryFields and IBMQ_Rome in the near future. Execution of an algorithm is based upon **QNodes**. These are like quantum functions. They are supposed to provide the quantum speed up to a classical computation. The QNode used in the tutorial is
+
+```python
+def circuit(phis):
+  qml.RX(phis[0], wires=0)                  ## Perform X rotation
+  qml.RY(phis[0], wires=0)                  ## Perform X rotation
+  return qml.expval(qml.PauliZ(0))          ## Compute Z expected value
+```
+
+This way has some disadvantages at first glance. I don't seem to be able to plot the circuit, and cannot visualize directly the statevector of the qubit in the Bloch sphere, like with Qiskit. However, *measurement of operators is remarkably easy*. With Qiskit I would have to use Aqua, and it is not at all clear how to implement it on a device without explicitly post-processing the histogram. So this is cool.
+
+**SUPER IMPORTANT:** A decorator must be used to link a QNode with a particular device. Also, QNodes can only include quantum operations, one operation per line, and return **measured observables**. The decorator is of the form
+
+```python
+@qml.qnode(device)
+def myqnode(params):
+  ## Some quantum operations
+  return observables
+```
+
+**IMPORTANT:** Kwarg ```wires``` receives a list with all the qubits upon which the desired quantum operation acts. It is a shame that no visualization tool is explicit, but I think that PennyLane is for pros that can visualize their circuit on their heads.
+
+Before implementing a circuit, it is healthy to check the operations supported by a device. I think that most of the time we might be using Qiskit Backends. Therefore, I expect no trouble here. However, it is not a bad idea to chek operations for both default backends and StrawberryFields from PennyLane.
+
+> What blows my mind is that the function can be used as a common Python function. PennyLane makes a very nice integration of the quantum part and the classical control. This platform might be awesome for VQE in Quantum Chemistry.
+
+The scripts tend to be a bit slow. As mentioned earlier, some of the profits of using PennyLane is that gradients can be computed by quantum circuits. This can be done by a instruction of the form
+
+```python
+circuit_gradient = qml.grad(circuit, argnum=INDEP_VARS)
+```
+
+Where ```INDEP_VARS``` is but a list with the indexes of the ```params``` with respect to I would like to differentiate. For optimization, however, PennyLane has built-in functions, and this example doesn't provide explicit need for computation of gradient. What they do is wrap the QNode with a common Python function, and apply an optimizer.
+
+Optimization starts by defining initial parameter values. After that, an optimizer is initialized using the instruction
+
+```python
+optimizer = qml.GradientDescentOptimizer(stepsize=STEP)
+```
+
+I think that if someone is reading this, he or she might have some intuition about what Gradient Descent means. I repeat an optimization step several times. The optimizer then produces the set of parameter values that minimize cost function. The details of the code necessary for this step are included on the Python script.
+
+First, I illustrate convergence of the rotation angles
+
+<p align="center">
+  <img src="diegoherrera262_files/HelloWorldXandau/RotationCircuit.png">
+</p>
+
+Finally, I illustrate that minima is obtained
+
+<p align="center">
+  <img src="diegoherrera262_files/HelloWorldXandau/Minima.png">
+</p>
