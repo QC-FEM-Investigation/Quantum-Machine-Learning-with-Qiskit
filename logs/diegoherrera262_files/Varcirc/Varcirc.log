@@ -1,0 +1,278 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdftex 2020.4.7)  12 MAR 2021 12:53
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Varcirc.tex
+(./Varcirc.tex
+! Undefined control sequence.
+l.1 \documentclass
+                  {standalone}
+? q
+OK, entering \batchmode...
+! Undefined control sequence.
+l.2 \usepackage
+               {tikz}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.3 \usetikzlibrary
+                   {quantikz}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.5 \begin
+          {document}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.6   \begin
+            {quantikz}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.7   \lstick
+             {$|\psi_i \rangle$}& \gate{U(\vec{\theta}_1)}\qwbundle[alternat...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+l.7   \lstick{$|\psi_i \rangle$}&
+                                  \gate{U(\vec{\theta}_1)}\qwbundle[alternat...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+l.7   \lstick{$|\psi_i \rangle$}& \gate
+                                       {U(\vec{\theta}_1)}\qwbundle[alternat...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   \mathaccent 
+\vec ->\mathaccent 
+                   "017E 
+l.7   \lstick{$|\psi_i \rangle$}& \gate{U(\vec
+                                              {\theta}_1)}\qwbundle[alternat...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Extra }, or forgotten $.
+l.7 ...|\psi_i \rangle$}& \gate{U(\vec{\theta}_1)}
+                                                  \qwbundle[alternate]{} & \...
+I've deleted a group-closing symbol because it seems to be
+spurious, as in `$x}$'. But perhaps the } is legitimate and
+you forgot something else, as in `\hbox{$x}'. In such cases
+the way to recover is to insert both the forgotten and the
+deleted material, e.g., by typing `I$}'.
+
+! Undefined control sequence.
+l.7 ...rangle$}& \gate{U(\vec{\theta}_1)}\qwbundle
+                                                  [alternate]{} & \gate{U(\v...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+l.7 ...{U(\vec{\theta}_1)}\qwbundle[alternate]{} &
+                                                   \gate{U(\vec{\theta}_2)}\...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+l.7 ...c{\theta}_1)}\qwbundle[alternate]{} & \gate
+                                                  {U(\vec{\theta}_2)}\qwbund...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.7 ...nate]{} & \gate{U(\vec{\theta}_2)}\qwbundle
+                                                  [alternate]{} & \qwbundle[...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+l.7 ...{U(\vec{\theta}_2)}\qwbundle[alternate]{} &
+                                                   \qwbundle[alternate]{} & ...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+l.7 ...heta}_2)}\qwbundle[alternate]{} & \qwbundle
+                                                  [alternate]{} & \ldots & &...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+l.7 ...dle[alternate]{} & \qwbundle[alternate]{} &
+                                                   \ldots & & \gate{U(\vec{\...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.7 ...nate]{} & \qwbundle[alternate]{} & \ldots &
+                                                   & \gate{U(\vec{\theta}_L)...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Misplaced alignment tab character &.
+l.7 ...te]{} & \qwbundle[alternate]{} & \ldots & &
+                                                   \gate{U(\vec{\theta}_L)}\...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+l.7 ...& \qwbundle[alternate]{} & \ldots & & \gate
+                                                  {U(\vec{\theta}_L)}\qwbund...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.7 ...ldots & & \gate{U(\vec{\theta}_L)}\qwbundle
+                                                  [alternate]{} & \qwbundle[...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Misplaced alignment tab character &.
+l.7 ...{U(\vec{\theta}_L)}\qwbundle[alternate]{} &
+                                                   \qwbundle[alternate]{} \r...
+I can't figure out why you would want to use a tab mark
+here. If you just want an ampersand, the remedy is
+simple: Just type `I\&' now. But if some right brace
+up above has ended a previous alignment prematurely,
+you're probably due for more error messages, and you
+might try typing `S' now just to see what is salvageable.
+
+! Undefined control sequence.
+l.7 ...heta}_L)}\qwbundle[alternate]{} & \qwbundle
+                                                  [alternate]{} \rstick{$|\p...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.7 ...ternate]{} & \qwbundle[alternate]{} \rstick
+                                                  {$|\psi_f \rangle$}
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Missing } inserted.
+<inserted text> 
+                }
+<to be read again> 
+                   $
+l.7 ...rnate]{} & \qwbundle[alternate]{} \rstick{$
+                                                  |\psi_f \rangle$}
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+<to be read again> 
+                   \psi 
+l.7 ...]{} & \qwbundle[alternate]{} \rstick{$|\psi
+                                                  _f \rangle$}
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (3.1695pt too wide) in paragraph at lines 5--8
+[]\tenrm document quan-tikz $\tensy j\teni  []\tensy i$ \tenrm U($[])[\teni alt
+ernate\tenrm ][][][\teni alternate\tenrm ][][\teni alternate\tenrm ][] [] [][\t
+eni alternate\tenrm ][][\teni alternate\tenrm ][][]$|$\teni  []\tensy i$ |
+
+\hbox(9.78334+2.86108)x469.75499, glue set - 1.0
+.\hbox(0.0+0.0)x20.0
+.\tenrm d
+.\tenrm o
+.\kern0.27779
+.\tenrm c
+.etc.
+
+ [1{/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] )</u
+sr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
+r/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/
+local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/lo
+cal/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local
+/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on Varcirc.pdf (1 page, 45951 bytes).
+PDF statistics:
+ 28 PDF objects out of 1000 (max. 8388607)
+ 19 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

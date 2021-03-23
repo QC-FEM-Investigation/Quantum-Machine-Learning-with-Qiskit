@@ -1,0 +1,9 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{quantikz}
+
+\begin{document}
+  \begin{quantikz}
+  \lstick{$|\psi_i \rangle$}& \gate{U(\vec{\theta}_1)}\qwbundle[alternate]{} & \gate{U(\vec{\theta}_2)}\qwbundle[alternate]{} & \qwbundle[alternate]{} & \ldots & & \gate{U(\vec{\theta}_L)}\qwbundle[alternate]{} & \qwbundle[alternate]{} \rstick{$|\psi_f \rangle$} 
+  \end{quantikz}
+\end{document}

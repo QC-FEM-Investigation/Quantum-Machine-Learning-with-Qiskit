@@ -163,11 +163,118 @@ I think that if someone is reading this, he or she might have some intuition abo
 First, I illustrate convergence of the rotation angles
 
 <p align="center">
-  <img src="diegoherrera262_files/HelloWorldXandau/RotationCircuit.png">
+  <img src="diegoherrera262_files/HelloWorldXandau/RotationCircuit.png" width="400">
 </p>
 
 Finally, I illustrate that minima is obtained
 
 <p align="center">
-  <img src="diegoherrera262_files/HelloWorldXandau/Minima.png">
+  <img src="diegoherrera262_files/HelloWorldXandau/Minima.png" width="400">
 </p>
+
+**Date:** 12/03/21
+**Topic:** Variational Classifier
+
+After testing a simple varaitional approach with PennyLane, I set out to performing an actual variational classifier with this library. The application is to fit the so called *parity function*:
+
+$$f: x \in \{0,1\}^{\otimes n} \rightarrow y = \begin{cases}1 & \text{uneven number of ones} \\ 0 & \text{otherwise}\end{cases}$$
+
+The principle of a generic variational circuit is to define *operation layers*, from a template. Each operation layer is parametrized. In general, a layer operation is denoted by $\hat{U}(\vec{\theta})$. An illustration of a variational circuit is given below
+
+<p align="center">
+  <img src="diegoherrera262_files/Varcirc/Varcirc.svg" width="600">
+</p>
+
+This is the general structure of a **Quantum Neural Network (QNN)**. I'm still not completely familiar with the nature of the parametrized operators. It seems like huge entanglement is desirable. The unitary proposed in the example is composed of elementary parametric single qubit unitaries, followed by a cascade of entangling CNOT gates. The elementary layer is illustrated below.
+
+<p align="center">
+  <img src="diegoherrera262_files/Varcirc/Unitary.svg" width="300">
+</p>
+
+At the first stage, I fit the parity function with a variational circuit. What is new is that the do not compute the function, but take a sample from domain-codomain, and use the defined "labels" to interpolate the value of parity function. This is a very interesting approach to me. Finally, I recreated Iris classification, which basically uses the same quantum nodes as the fitting exercise.
+
+### Parity function fitting
+
+As before, I imported PennyLane and NumPy Wrapper. The new part is that I had to include an *optimizer*. The point of the *Nesterov Momentum Optimizer* is that it makes gradient descent more efficient. The principle of this opt is based upon physical intuition, which is very cool. I still don't fully understand it. It can be imported using
+
+```python
+from pennylane.optimize import NesterovMomentumOptimizer
+```
+
+The proposed example uses 4 qubits for the QNN. I will not reproduce the code here. It is at ```Notebooks/VarClassifier.py```.
+
+**IMPORTANT:** As input, the circuits receives a certain binary chain, and processes it in order to compute its parity. PennyLane has a function ```BasisState``` that prepares as input a binary string from a list.
+
+**Date:** 18/03/21
+**Topic:** Continuation of Variational Classifier
+
+#### Defining a QNN Layer
+
+The layer is defined as above. The circuit exemplified contains 4 qubits. The parameters are stored in a 2D array. The general definition of a $R(\vec{\theta})$ is:
+
+$$R(\vec{\theta}) = RZ(\theta_1)RY(\theta_2)RZ(\theta_3)$$
+
+**NOTE:** I think this is the analogous to ```circuit.u(a,b,c)``` from Qiskit.
+
+It is declared by an insturction of the type
+
+```python
+qml.Rot(theta_1, theta_2, theta_3, wires=wire_)
+```
+
+The schematic of a layer has already been introduced, and the code may be seen on ```VarClassifier.py```.
+
+#### Encoding the input
+
+Since the example consists on fitting the parity function, the inputs are the computational basis. We input a binary string, and expect to measure its parity on the 0th qubit. PennyLane already has a function for initializing a state of the computational basis:
+
+```
+qml.BasisState(x, wires=wirelist)
+```
+
+```x``` is a list of zeros and ones. There are other ways to encode input vectors. More details can be found on Schuld's book ***Supervised Learning with Quantum Computers***.
+
+#### Implementation of the QNN
+
+It consists on an initialization step, followed by a layer repetition. The parameters that are to be fitted are called *weights*. These should be passed as the first argument of a ```qnode```. The remaining arguments are static, and are never optimized.
+
+#### Definition of variational classifier
+
+For this application, it is suggested to include "classical" biases, that are added to the output of the QNN value
+
+**IMPORTANT:** Familiarity with NumPy is advised, since most of the operations are vectorized, so that components do not appear explicitly.
+
+#### Definition of cost function
+
+For this example, the cost is the *square distance* between given labels ($f(x)$) and predictions ($p_x$)
+
+$$S = \sum_{x \in \{0,1\}^{\otimes N}} (f(x) - p_x)^2$$
+
+In the example, they define an *accuracy*, which accounts for the percentage of correctly classified inputs.
+
+### Loading data to fit
+
+The data is stored in a simple file. The circuit is expected to compute the parity of a 4-bit string, and the text contains the proper label (0 or 1). The first 4 bits contain the chain, and the last, the label. See ```varClassData.txt```. I discovered the function ```np.loadtxt```, which is awesome. I usually manage data from files with Pandas, but this might be a game changer for me. Anyways, let's recap what is the point:
+
+> 1. A QNode is set up to take a 4-bit chain, and compute its parity on the 0th qubit. The algorithm is based upon a sequence of *layers*, which depend on a set of tunable parameters. A classical bias is included for completeness
+> 2. We loaded a set of data that tells the model how are the chains to be classified according to parity. We will find optimal parameter values such that the highest possible number of 4-bit chains are classified correctly.
+
+### Optimization of parameters
+
+At each iteration, we select **batches of sample data**. With those, an optimizer step is carried out.
+
+> Remember that we optimize the **cost function**. It depends on several things: a) the model parameters, b) the sample chains and c) the correct labels. The cost function was the square loss of predicted labels versus correct labels.
+
+I think they chose a random batch, because the classifying data is available for all passible inputs. So it is to give the impression that we do not have access to all the possible inputs, like on a real life example.
+
+### Simulation results
+
+The computation actually works really well. The algorithm converges relatively fast. I include graphic results for sake of illustration.
+
+<p align="center">
+  <img src="diegoherrera262_files/Varcirc/ParityFitting.png" width="400">
+</p>
+
+What I notice is that Qiskit would implement those rotations using 2 $\pi/2$ pulses, and at least 3 Z-rotations. I think this is better than defining the operator in ZY decomposition. Also, the algorithm uses too much CNOT gates. If we are to run this algorithm on a real QPU, the low fidelity of this gate would kill us. The entanglement should be performed by other means, in my opinion, given the available devices.
+
+> This may be some aspect we could study. How to create highly entangled states with low fidelity CNOTs or other QC universal 2-qubit gates.

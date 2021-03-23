@@ -1,0 +1,14 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usetikzlibrary{quantikz}
+
+\begin{document}
+  \begin{quantikz}
+  \lstick{$|q_0\rangle$} \qw     & \gate{R(\vec{\theta}_1)} & \ctrl{1} & \qw      & \qw & \qw & \qw      & \qw \\
+  \lstick{$|q_1\rangle$} \qw     & \gate{R(\vec{\theta}_2)} & \targ{}  & \ctrl{1} & \qw & \qw & \qw      & \qw \\
+  \lstick{$|q_2\rangle$} \qw     & \gate{R(\vec{\theta})}   & \qw      & \targ{}  & \qw & \qw & \qw      & \qw \\
+                                 &                          &          & \vdots   &     &     &          &     \\
+  \lstick{$|q_{N-2}\rangle$} \qw & \gate{R(\vec{\theta}_{N-2})} & \qw      & \ldots   &   & \qw & \ctrl{1} & \qw \\
+  \lstick{$|q_{N-1}\rangle$} \qw & \gate{R(\vec{\theta}_{N-1})} & \qw      & \ldots   &   & \qw & \targ{}  & \qw \\
+  \end{quantikz}
+\end{document}
