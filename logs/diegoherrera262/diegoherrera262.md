@@ -278,3 +278,72 @@ The computation actually works really well. The algorithm converges relatively f
 What I notice is that Qiskit would implement those rotations using 2 $\pi/2$ pulses, and at least 3 Z-rotations. I think this is better than defining the operator in ZY decomposition. Also, the algorithm uses too much CNOT gates. If we are to run this algorithm on a real QPU, the low fidelity of this gate would kill us. The entanglement should be performed by other means, in my opinion, given the available devices.
 
 > This may be some aspect we could study. How to create highly entangled states with low fidelity CNOTs or other QC universal 2-qubit gates.
+
+**Date:** 23/04/21
+**Topics:** Quantum Chemistry
+
+## Introduction to the VQE in PennyLane
+
+The **Variational Quantum Eigensolver (VQE)** is an hybrid algorithm that allows estimation of the ground state of a Hamiltonian. A quantum node produces an *ansatz* state using a QNN, while a classical control adjusts the network's parameters so as to minimize the expected value of a given Hamiltonian under the ansatz state.
+
+> This is very interesting, yet intimidating. I have already read about quantum chemistry on some specialized books, focused on second quantization formalism. However, I will go on reading and include some handwritten notes for sake of completeness.
+
+At this stage, I will venture on computing the ground state of a Hamiltonian that is not necessarily a Electronic or Molecular Hamiltonian. At this stage, I discovered that in order to work with general Hamiltonias for VQE implementations, at least two classes are needed:
+
+1. ```qml.Hamiltonian(coeffs, observables, simplify=False)```: This class allows definition of an arbitrary Hamiltonian, as expanded in the **Pauli tensor product basis** (Documentation [here](https://pennylane.readthedocs.io/en/stable/code/api/pennylane.Hamiltonian.html)):
+
+$$\hat{H} = \sum_{i_1 \cdots i_N} H_{i_1 \cdots i_N}\otimes_{k = 1}^{N} \hat{\sigma}_{i_k}^{(k)}$$
+
+2. ```qml.ExpValCost(ansatz,hamiltonian,device,interface='autograd',diff_method='best',optimez=False,**kwargs)```: This class produces a **cost function** that is simply the expected value of a Hamiltonian. The argument **ansatz** is just a QNN that produces an *ansatz* state upon which to evaluate the expected value of the Hamiltonian. This can be further optimized using a **gradiend descent algorithm**. Documentation [here](https://pennylane.readthedocs.io/en/stable/code/api/pennylane.ExpvalCost.html).
+
+**SUPER IMPORTANT:** PennyLane has a class of layer templates that can be used specifically for VQE and VQOA. These are contained on the module ```qml.templates```. I include a [link](https://pennylane.readthedocs.io/en/stable/code/qml_templates.html) in case I need the list of templates in the future.
+
+In this simple introduction, I will consider a Hamiltonian of the shape
+
+$$\hat{H} = \sum_{j = 1}^{3} J_j \sigma_j^{(1)} \otimes \sigma_j^{(2)}$$
+
+That I already know its eigenstates are the **Bell basis**, and its eigenvalues are easily computed with numpy. The layer I will use is fairly straightforward
+
+<p align="center">
+  <img src="diegoherrera262_files/IsingTestQNN/IsingTestQNN.svg" width="200">
+</p>
+
+### Definition of Variational Hamiltonian
+
+I use the following code lines to do the trick
+
+```python
+ExchangeIntegrals = [1, 1, 1]
+Ops = [\
+        qml.PauliX(0) @ qml.PauliX(1),\
+        qml.PauliY(0) @ qml.PauliY(1),\
+        qml.PauliZ(0) @ qml.PauliZ(1)\
+      ]
+VQE_Ham = qml.Hamiltonian(ExchangeIntegrals,Ops)
+print(VQE_Ham)
+```
+
+### Definition of the VQE QNN
+
+I use the following code lines to do the trick
+
+```python
+def VQE_QNN(params):
+    '''
+    Function for defining
+    the VQE QNN
+    '''
+    for idx in range(2):
+        ## CAREFUL! The unpacker * is needed
+        ## because of the way qml.Rot works
+        qml.Rot(*params[idx],wires=idx)
+    qml.CNOT(wires=[0,1])
+```
+
+### Optimization of energy
+
+I used the function ```opt.step_and_cost``` which retrieves the optimized parameters after one descent, and the cost function evaluation **prior to optimization**. Then iterated until top iterations reached, or energy converges.
+
+### Concluding remarks
+
+I probed the routines. Turns out that sometimes the optimization converges correctly to the minimum energy. However, for some values of the exchange integrals, the convergence energy is not the minimum one. In all cases, the algorithm converges. Perhaps changing the optimizer may improve the results

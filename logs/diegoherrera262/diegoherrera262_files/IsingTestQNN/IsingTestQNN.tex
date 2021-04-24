@@ -1,0 +1,12 @@
+\documentclass{standalone}
+
+\usepackage{physics}
+\usepackage{tikz}
+\usetikzlibrary{quantikz}
+
+\begin{document}
+  \begin{quantikz}
+    \lstick[wires=2]{$\ket{0}^{\otimes 2}$} & \gate{R(\vec{\theta}_1)} \qw& \ctrl{1} & \qw \\
+    & \gate{R(\vec{\theta}_2)} \qw& \targ{} & \qw
+  \end{quantikz}
+\end{document}
