@@ -346,4 +346,4 @@ I used the function ```opt.step_and_cost``` which retrieves the optimized parame
 
 ### Concluding remarks
 
-I probed the routines. Turns out that sometimes the optimization converges correctly to the minimum energy. However, for some values of the exchange integrals, the convergence energy is not the minimum one. In all cases, the algorithm converges. Perhaps changing the optimizer may improve the results
+I probed the routines. Turns out that sometimes the optimization converges correctly to the minimum energy. However, for some values of the exchange integrals, the convergence energy is not the minimum one. In all cases, the algorithm converges. Perhaps changing the optimizer may improve the results. In the end, I reduced the step of the optimizer, and energies converged correctly.

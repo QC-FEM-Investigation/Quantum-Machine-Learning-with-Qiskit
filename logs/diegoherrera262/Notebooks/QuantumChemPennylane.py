@@ -16,7 +16,7 @@ from pennylane import numpy as np
 ################################################################################
 ##                       DEFINITION OF VQE HAMILTONIAN                        ##
 ################################################################################
-ExchangeIntegrals = [2, 1, 3]
+ExchangeIntegrals = [5.67, 2.32, 3.78]
 Ops = [\
         qml.PauliX(0) @ qml.PauliX(1),\
         qml.PauliY(0) @ qml.PauliY(1),\
@@ -82,7 +82,7 @@ cost_fn = qml.ExpvalCost(VQE_QNN, VQE_Ham, dev)
 ################################################################################
 ##                      INITIALIZE OPTIMIZER AND SEED                         ##
 ################################################################################
-optimizer = qml.GradientDescentOptimizer(stepsize = 0.4)
+optimizer = qml.GradientDescentOptimizer(stepsize = 0.1)
 np.random.seed(0)
 ## REMEMBER: We are using 2 qubits, and 3 parameters per rotation per qubit
 params = np.random.normal(0, np.pi, (2,3))
