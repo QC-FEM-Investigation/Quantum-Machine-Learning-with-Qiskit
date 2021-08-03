@@ -175,6 +175,8 @@ Finally, I illustrate that minima is obtained
 **Date:** 12/03/21
 **Topic:** Variational Classifier
 
+## Variational Classifier
+
 After testing a simple varaitional approach with PennyLane, I set out to performing an actual variational classifier with this library. The application is to fit the so called *parity function*:
 
 $$f: x \in \{0,1\}^{\otimes n} \rightarrow y = \begin{cases}1 & \text{uneven number of ones} \\ 0 & \text{otherwise}\end{cases}$$
@@ -228,11 +230,11 @@ The schematic of a layer has already been introduced, and the code may be seen o
 
 Since the example consists on fitting the parity function, the inputs are the computational basis. We input a binary string, and expect to measure its parity on the 0th qubit. PennyLane already has a function for initializing a state of the computational basis:
 
-```
+```python
 qml.BasisState(x, wires=wirelist)
 ```
 
-```x``` is a list of zeros and ones. There are other ways to encode input vectors. More details can be found on Schuld's book ***Supervised Learning with Quantum Computers***.
+In this function, ```x``` is a list of zeros and ones. There are other ways to encode input vectors. More details can be found on Schuld's book ***Supervised Learning with Quantum Computers***.
 
 #### Implementation of the QNN
 
@@ -347,3 +349,19 @@ I used the function ```opt.step_and_cost``` which retrieves the optimized parame
 ### Concluding remarks
 
 I probed the routines. Turns out that sometimes the optimization converges correctly to the minimum energy. However, for some values of the exchange integrals, the convergence energy is not the minimum one. In all cases, the algorithm converges. Perhaps changing the optimizer may improve the results. In the end, I reduced the step of the optimizer, and energies converged correctly.
+
+**Date:** 29/04/21
+**Topic:** Integration with Qiskit
+
+I tested the routines within the framework of Qiskit. Turns out that the only changes that have to be done are to specify a Qiskit backend, and a Qiskit service provider. This can be done by the line of code
+
+```python
+dev = qml.device('service.provider', wires=wires_, backend='mybackend')
+```
+
+This is so because I have already stated my IBM Q token in PennyLane's config file. Tried the algorithm with Aer simulator, and ran a bit slow but eventually converged. However, execution on IBM Q Experience is tediously lengthy.
+
+**Date:** 29/04/21
+**Topic:** VQE for excited states
+
+## Computation of excited states with VQE
